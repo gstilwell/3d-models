@@ -27,7 +27,7 @@ difference(){
     cube([radius + 0.1, radius + 0.1, radius + 0.1], center=true);    
      
     translate([radius/2, radius/2, radius/2]){
-        sphere(r = radius, $fn = 25, center = true);
+        sphere(r = radius, $fn = 100, center = true);
     }
 }
 
@@ -38,7 +38,7 @@ difference(){
     cube([radius + 0.1, radius + 0.1, length + 0.1], center=true);    
      
     translate([radius/2, radius/2, 0]){
-        cylinder(h = length + 0.3, r = radius, $fn = 25, center = true);
+        cylinder(h = length + 0.3, r = radius, $fn = 100, center = true);
     }
 }
 
@@ -149,19 +149,25 @@ difference(){
 
 module fingerNotch(length, height, radius)
 translate( [length/2, 0, 0] ) {
-    cylinder(height + 0.2, r = radius, $fn = 25, center = true);
+    cylinder(height + 0.2, r = radius, $fn = 100, center = true);
 }
 
 
 
 
-//// stockpile big cards
-//// values in mm
-//length = 87;
-//width = 57;
-//height = 12;
-//notchRadius = 15;
-//edgeRad = 0.75;
+// stockpile big cards
+// values in mm
+largeLength = 87;
+largeWidth = 57;
+largeHeight = 12;
+largeNotchRadius = 15;
+largeEdgeRad = 1;
+
+difference() {
+    roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
+    fingerNotch(largeLength, largeHeight, largeNotchRadius);
+    text("$");
+}
 
 // stockpile small cards
 // values in mm
@@ -169,9 +175,11 @@ length = 66;
 width = 44;
 height = 12;
 notchRadius = 13;
-edgeRad = 0.75;
+edgeRad = 1;
 
-difference() {
-    roundedEdgesCube( length, width, height, edgeRad );
-    fingerNotch(length, height, notchRadius);
+translate([0,57,0]) {
+    difference() {
+        roundedEdgesCube( length, width, height, edgeRad );
+        fingerNotch(length, height, notchRadius);
+    }
 }

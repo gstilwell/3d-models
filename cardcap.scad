@@ -18,32 +18,29 @@ Contact: s.vilches.e@gmail.com
      *Some times it's needed to use F6 to see good results!   
  	 ----------------------------------------------------------- 
 */
-// Test it!
-// roundCornersCube(10,5,2,1);
 
 // creates the shape that is subtracted from a cube to make its corners rounded.
-module roundedCorner(h,radius)
+module roundedCorner(radius)
 // cube - 1/4 cylinder
 difference(){
    // add small fractions to avoid "ghost boundaries" when subtracting
-   translate([radius/2 + 0.1, radius/2 + 0.1, 0]){
-      cube([radius + 0.2, radius + 0.1, h + 0.2], center=true);
-   }
-
-   cylinder(h = h + 0.2, r = radius, $fn = 100, center = true);
+    cube([radius + 0.1, radius + 0.1, radius + 0.1], center=true);    
+     
+    translate([radius/2, radius/2, radius/2]){
+        sphere(r = radius, $fn = 25, center = true);
+    }
 }
 
 
 module roundedEdge(length, radius)
 // cube - 1/4 cylinder
 difference(){
-    cube([radius + 0.1, radius + 0.1, length + 0.2], center=true);    
+    cube([radius + 0.1, radius + 0.1, length + 0.1], center=true);    
      
     translate([radius/2, radius/2, 0]){
-        cylinder(h = length + 0.3, r = radius, $fn = 100, center = true);
+        cylinder(h = length + 0.3, r = radius, $fn = 25, center = true);
     }
 }
-
 
 module roundedEdgesCube(x,y,z,r) {
     difference() {
@@ -90,6 +87,34 @@ module roundedEdgesCube(x,y,z,r) {
         translate([-(x/2 - r/2), -(y/2 - r/2), 0]) {
             rotate([0,0,0]) { roundedEdge(z, r); }
         }
+
+        // top corners
+        translate([(x/2 - r/2), (y/2 - r/2), (z/2 - r/2)]) {
+            rotate([90,90,-90]) { roundedCorner(r); }
+        }
+        translate([(x/2 - r/2), -(y/2 - r/2), (z/2 - r/2)]) {
+            rotate([-90,0,90]) { roundedCorner(r); }
+        }
+        translate([-(x/2 - r/2), (y/2 - r/2), (z/2 - r/2)]) {
+            rotate([0,180,180]) { roundedCorner(r); }
+        }
+        translate([-(x/2 - r/2), -(y/2 - r/2), (z/2 - r/2)]) {
+            rotate([0,90,0]) { roundedCorner(r); }
+        }
+
+        // bottom corners
+        translate([(x/2 - r/2), (y/2 - r/2), -(z/2 - r/2)]) {
+            rotate([90,-90,0]) { roundedCorner(r); }
+        }
+        translate([(x/2 - r/2), -(y/2 - r/2), -(z/2 - r/2)]) {
+            rotate([-90,-90,90]) { roundedCorner(r); }
+        }
+        translate([-(x/2 - r/2), (y/2 - r/2), -(z/2 - r/2)]) {
+            rotate([90,0,0]) { roundedCorner(r); }
+        }
+        translate([-(x/2 - r/2), -(y/2 - r/2), -(z/2 - r/2)]) {
+            rotate([0,0,0]) { roundedCorner(r); }
+        }
     }
 }
 
@@ -122,30 +147,31 @@ difference(){
     }
 }
 
-
 module fingerNotch(length, height, radius)
 translate( [length/2, 0, 0] ) {
-    cylinder(height + 0.2, r = radius, $fn = 100, center = true);
+    cylinder(height + 0.2, r = radius, $fn = 25, center = true);
 }
 
 
 
 
-length = 88.9;
-width = 63.5;
-height = 9.525;
-cornerRad = 5;
+//// stockpile big cards
+//// values in mm
+//length = 87;
+//width = 57;
+//height = 12;
+//notchRadius = 15;
+//edgeRad = 0.75;
+
+// stockpile small cards
+// values in mm
+length = 66;
+width = 44;
+height = 12;
+notchRadius = 13;
 edgeRad = 0.75;
-
-/*
-translate([0, -width/2, height/2]) {
-rotate([0,90,0]){
-    roundedEdge(length, edgeRad);
-}
-}
-*/
 
 difference() {
     roundedEdgesCube( length, width, height, edgeRad );
-    fingerNotch(length, height, 10);
+    fingerNotch(length, height, notchRadius);
 }

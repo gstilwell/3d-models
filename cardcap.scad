@@ -245,3 +245,19 @@ translate([0, -largeWidth * 1.1, 0])    capWithNothingCutOut    ( largeLength, l
 translate([0,  largeWidth * 1.1, 0])    capWithXCutOut          ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
                                         capWithCapCutOut        ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
 translate([largeLength * 1.1, 0, 0])    capWithFancyXCutOut     ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
+
+
+// stockpile small cards
+// values in mm
+//length = 66;
+//width = 44;
+//height = 12;
+//notchRadius = 13;
+//edgeRad = 1;
+
+//translate([0,57,0]) {
+//    difference() {
+//        roundedEdgesCube( length, width, height, edgeRad );
+//        fingerNotch(length, height, notchRadius);
+//    }
+//} 

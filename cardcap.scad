@@ -195,10 +195,33 @@ largeHeight = 12;
 largeNotchRadius = 15;
 largeEdgeRad = 1;
 
+// with nothing cut out
+translate([0, -largeWidth * 1.1, 0]) {
+    difference() {
+        roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
+        fingerNotch(largeLength, largeHeight, largeNotchRadius);
+    }
+}
+
+// with x cut out
+translate([0, largeWidth * 1.1, 0]) {
+    difference() {
+        roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
+        fingerNotch(largeLength, largeHeight, largeNotchRadius);
+        xCutout();
+    }
+}
+
+// with cap cut out
 difference() {
     roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
     fingerNotch(largeLength, largeHeight, largeNotchRadius);
-    xCutout();
+    difference() {
+        roundedEdgesCube( largeLength * 0.75, largeWidth * 0.75, largeHeight * 1.1, largeEdgeRad );
+        scale([1.3, 1.3]) {
+            fingerNotch(largeLength * 0.75, largeHeight * 1.1, largeNotchRadius * 1);
+        }
+    }
 }
 
     //triangleCutout(largeLength, largeWidth * 1.25, largeHeight * 1.40, 90, 0, -largeLength/2, -largeWidth/1.58, -1.5*largeHeight);

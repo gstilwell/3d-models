@@ -154,26 +154,26 @@ module triangleCutout(x,y,z) {
     );
 }
 
-module xCutout() {
-    translate([-largeWidth/6.5, 0, largeHeight]) {
+module xCutout(l,w,h) {
+    translate([-w/6.5, 0, h]) {
         rotate([0,90,0]) {
-            translate([0,-largeLength/4,-largeWidth/2]) {
-                triangleCutout(largeHeight * 2, largeLength / 2, largeWidth / 2.2, 0,0,0,0,0);
+            translate([0,-l/4,-w/2]) {
+                triangleCutout(h * 2, l / 2, w / 2.2, 0,0,0,0,0);
             }
         }
         rotate([90,90,0]) {
-            translate([0,-largeLength/4,-largeWidth/2.5]) {
-                triangleCutout(largeHeight * 2, largeLength / 2, largeWidth / 3, 0,0,0,0,0);
+            translate([0,-l/4,-w/2.5]) {
+                triangleCutout(h * 2, l / 2, w / 3, 0,0,0,0,0);
             }
         }
         rotate([0,90,90]) {
-            translate([0,-largeLength/4,-largeWidth/2.5]) {
-                triangleCutout(largeHeight * 2, largeLength / 2, largeWidth / 3, 0,0,0,0,0);
+            translate([0,-l/4,-w/2.5]) {
+                triangleCutout(h * 2, l / 2, w / 3, 0,0,0,0,0);
             }
         }
         rotate([-90,90,90]) {
-            translate([0,-largeLength/4,-largeWidth/2]) {
-                triangleCutout(largeHeight * 2, largeLength / 2, largeWidth / 2.2, 0,0,0,0,0);
+            translate([0,-l/4,-w/2]) {
+                triangleCutout(h * 2, l / 2, w / 2.2, 0,0,0,0,0);
             }
         }
     }
@@ -200,7 +200,7 @@ module capWithXCutOut(l, w, h, edgeRad, notchRad) {
     difference() {
         roundedEdgesCube( l, w, h, edgeRad );
         fingerNotch(l, h, notchRad);
-        xCutout();
+        xCutout(l, w, h);
     }
 }
 
@@ -221,7 +221,7 @@ module capWithFancyXCutOut(l, w, h, edgeRad, notchRad) {
     difference() {
         roundedEdgesCube( l, w, h, edgeRad );
         fingerNotch(l, h, notchRad);
-        xCutout();
+        xCutout(l, w, h);
         difference() {
             roundedEdgesCube( l * 0.85, w * 0.77, h * 1.1, edgeRad );
             scale([1.3, 1.3]) {
@@ -233,31 +233,42 @@ module capWithFancyXCutOut(l, w, h, edgeRad, notchRad) {
         }
     }
 }
+
+
+
+
 // stockpile big cards
 // values in mm
-largeLength = 87;
-largeWidth = 57;
-largeHeight = 12;
-largeNotchRadius = 15;
-largeEdgeRadius = 1;
+    largeLength = 87;
+    largeWidth = 57;
+    largeHeight = 12;
+    largeEdgeRadius = 1;
+    largeNotchRadius = 15;
 
+// stockpile small cards
+// values in mm
+    length = 66;
+    width = 44;
+    height = 12;
+    edgeRadius = 1;
+    notchRadius = 13;
+
+large = true;
+small = !large;
+
+
+if( large ) {
 translate([0, -largeWidth * 1.1, 0])    capWithNothingCutOut    ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
 translate([0,  largeWidth * 1.1, 0])    capWithXCutOut          ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
                                         capWithCapCutOut        ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
 translate([largeLength * 1.1, 0, 0])    capWithFancyXCutOut     ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
+}
 
 
-// stockpile small cards
-// values in mm
-//length = 66;
-//width = 44;
-//height = 12;
-//notchRadius = 13;
-//edgeRad = 1;
 
-//translate([0,57,0]) {
-//    difference() {
-//        roundedEdgesCube( length, width, height, edgeRad );
-//        fingerNotch(length, height, notchRadius);
-//    }
-//} 
+if( small ) {
+translate([0, -width * 1.1, 0])     capWithNothingCutOut    ( length, width, height, edgeRadius, notchRadius );
+translate([0,  width * 1.1, 0])     capWithXCutOut          ( length, width, height, edgeRadius, notchRadius );
+                                    capWithCapCutOut        ( length, width, height, edgeRadius, notchRadius );
+translate([length * 1.1, 0, 0])     capWithFancyXCutOut     ( length, width, height, edgeRadius, notchRadius );
+}

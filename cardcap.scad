@@ -237,14 +237,30 @@ module capWithFancyXCutOut(l, w, h, edgeRad, notchRad) {
 
 
 
+
+
+large = false;
+small = !large;
+
+
+if( large ) {
 // stockpile big cards
 // values in mm
-    largeLength = 87;
-    largeWidth = 57;
-    largeHeight = 12;
-    largeEdgeRadius = 1;
-    largeNotchRadius = 15;
+    length = 87;
+    width = 57;
+    height = 12;
+    edgeRadius = 1;
+    notchRadius = 15;
 
+    translate([0, -width * 1.1, 0])     capWithNothingCutOut    ( length, width, height, edgeRadius, notchRadius );
+    translate([0,  width * 1.1, 0])     capWithXCutOut          ( length, width, height, edgeRadius, notchRadius );
+                                        capWithCapCutOut        ( length, width, height, edgeRadius, notchRadius );
+    translate([length * 1.1, 0, 0])     capWithFancyXCutOut     ( length, width, height, edgeRadius, notchRadius );
+}
+
+
+
+if( small ) {
 // stockpile small cards
 // values in mm
     length = 66;
@@ -253,22 +269,8 @@ module capWithFancyXCutOut(l, w, h, edgeRad, notchRad) {
     edgeRadius = 1;
     notchRadius = 13;
 
-large = true;
-small = !large;
-
-
-if( large ) {
-translate([0, -largeWidth * 1.1, 0])    capWithNothingCutOut    ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
-translate([0,  largeWidth * 1.1, 0])    capWithXCutOut          ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
-                                        capWithCapCutOut        ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
-translate([largeLength * 1.1, 0, 0])    capWithFancyXCutOut     ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
-}
-
-
-
-if( small ) {
-translate([0, -width * 1.1, 0])     capWithNothingCutOut    ( length, width, height, edgeRadius, notchRadius );
-translate([0,  width * 1.1, 0])     capWithXCutOut          ( length, width, height, edgeRadius, notchRadius );
-                                    capWithCapCutOut        ( length, width, height, edgeRadius, notchRadius );
-translate([length * 1.1, 0, 0])     capWithFancyXCutOut     ( length, width, height, edgeRadius, notchRadius );
+    translate([0, -width * 1.1, 0])     capWithNothingCutOut    ( length, width, height, edgeRadius, notchRadius );
+    translate([0,  width * 1.1, 0])     capWithXCutOut          ( length, width, height, edgeRadius, notchRadius );
+                                        capWithCapCutOut        ( length, width, height, edgeRadius, notchRadius );
+    translate([length * 1.1, 0, 0])     capWithFancyXCutOut     ( length, width, height, edgeRadius, notchRadius );
 }

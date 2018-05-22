@@ -27,7 +27,7 @@ difference(){
     cube([radius + 0.1, radius + 0.1, radius + 0.1], center=true);    
      
     translate([radius/2, radius/2, radius/2]){
-        sphere(r = radius, $fn = 100, center = true);
+        sphere(r = radius, $fn = 25, center = true);
     }
 }
 
@@ -38,7 +38,7 @@ difference(){
     cube([radius + 0.1, radius + 0.1, length + 0.1], center=true);    
      
     translate([radius/2, radius/2, 0]){
-        cylinder(h = length + 0.3, r = radius, $fn = 100, center = true);
+        cylinder(h = length + 0.3, r = radius, $fn = 25, center = true);
     }
 }
 
@@ -155,7 +155,7 @@ module triangleCutout(x,y,z) {
 }
 
 module xCutout() {
-    translate([-largeWidth/10, 0, largeHeight]) {
+    translate([-largeWidth/6.5, 0, largeHeight]) {
         rotate([0,90,0]) {
             translate([0,-largeLength/4,-largeWidth/2]) {
                 triangleCutout(largeHeight * 2, largeLength / 2, largeWidth / 2.2, 0,0,0,0,0);
@@ -181,7 +181,7 @@ module xCutout() {
 
 module fingerNotch(length, height, radius)
 translate( [length/2, 0, 0] ) {
-    cylinder(height + 0.2, r = radius, $fn = 100, center = true);
+    cylinder(height + 0.2, r = radius, $fn = 25, center = true);
 }
 
 
@@ -224,6 +224,23 @@ difference() {
     }
 }
 
+// with x cut out and tracing around notch
+translate([largeLength * 1.1, 0, 0]) {
+    difference() {
+        roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
+        fingerNotch(largeLength, largeHeight, largeNotchRadius);
+        xCutout();
+        difference() {
+            roundedEdgesCube( largeLength * 0.85, largeWidth * 0.77, largeHeight * 1.1, largeEdgeRad );
+            scale([1.3, 1.3]) {
+                fingerNotch(largeLength * 0.75, largeHeight * 1.1, largeNotchRadius * 1);
+            }
+            translate([-largeLength/3.66, 0, 0]) {
+                cube([largeLength, largeWidth, largeHeight*2], center=true);
+            }
+        }
+    }
+}
     //triangleCutout(largeLength, largeWidth * 1.25, largeHeight * 1.40, 90, 0, -largeLength/2, -largeWidth/1.58, -1.5*largeHeight);
     //triangleCutout(largeLength, largeWidth * 1.25, largeHeight * 1.25, -90, 0, -largeLength/2, -largeWidth/1.65, -1.5*largeHeight);
     //triangleCutout(largeLength, largeWidth / 1.9, largeHeight * 2.9, 180, 0, -largeLength/2, -largeWidth/3.8, -3*largeHeight);

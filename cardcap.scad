@@ -239,12 +239,12 @@ largeLength = 87;
 largeWidth = 57;
 largeHeight = 12;
 largeNotchRadius = 15;
-largeEdgeRad = 1;
+largeEdgeRadius = 1;
 
-translate([0, -largeWidth * 1.1, 0])    capWithNothingCutOut    ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
-translate([0,  largeWidth * 1.1, 0])    capWithXCutOut          ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
-                                        capWithCapCutOut        ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
-translate([largeLength * 1.1, 0, 0])    capWithFancyXCutOut     ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
+translate([0, -largeWidth * 1.1, 0])    capWithNothingCutOut    ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
+translate([0,  largeWidth * 1.1, 0])    capWithXCutOut          ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
+                                        capWithCapCutOut        ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
+translate([largeLength * 1.1, 0, 0])    capWithFancyXCutOut     ( largeLength, largeWidth, largeHeight, largeEdgeRadius, largeNotchRadius );
 
 
 // stockpile small cards

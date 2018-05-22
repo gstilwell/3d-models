@@ -241,27 +241,3 @@ translate([largeLength * 1.1, 0, 0]) {
         }
     }
 }
-    //triangleCutout(largeLength, largeWidth * 1.25, largeHeight * 1.40, 90, 0, -largeLength/2, -largeWidth/1.58, -1.5*largeHeight);
-    //triangleCutout(largeLength, largeWidth * 1.25, largeHeight * 1.25, -90, 0, -largeLength/2, -largeWidth/1.65, -1.5*largeHeight);
-    //triangleCutout(largeLength, largeWidth / 1.9, largeHeight * 2.9, 180, 0, -largeLength/2, -largeWidth/3.8, -3*largeHeight);
-    //triangleCutout(largeLength, largeWidth, largeHeight, 0, 90, -largeLength/2, -largeWidth/2, -1.5*largeHeight);
-
-//rotate([90,-90,0]) {
-//    translate([-length/2, 0, 0 ])
-//    triangleCutout(largeLength, largeWidth, largeHeight);
-//}
-
-// stockpile small cards
-// values in mm
-//length = 66;
-//width = 44;
-//height = 12;
-//notchRadius = 13;
-//edgeRad = 1;
-
-//translate([0,57,0]) {
-//    difference() {
-//        roundedEdgesCube( length, width, height, edgeRad );
-//        fingerNotch(length, height, notchRadius);
-//    }
-//}

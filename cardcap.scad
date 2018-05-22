@@ -187,6 +187,52 @@ translate( [length/2, 0, 0] ) {
 
 
 
+
+module capWithNothingCutOut(l, w, h, edgeRad, notchRad) {
+    difference() {
+        roundedEdgesCube( l, w, h, edgeRad );
+        fingerNotch(l, h, notchRad);
+    }
+}
+
+
+module capWithXCutOut(l, w, h, edgeRad, notchRad) {
+    difference() {
+        roundedEdgesCube( l, w, h, edgeRad );
+        fingerNotch(l, h, notchRad);
+        xCutout();
+    }
+}
+
+module capWithCapCutOut(l, w, h, edgeRad, notchRad) {
+    difference() {
+        roundedEdgesCube( l, w, h, edgeRad );
+        fingerNotch(l, h, notchRad);
+        difference() {
+            roundedEdgesCube( l * 0.75, w * 0.75, h * 1.1, edgeRad );
+            scale([1.3, 1.3]) {
+                fingerNotch(l * 0.75, h * 1.1, notchRad * 1);
+            }
+        }
+    }
+}
+
+module capWithFancyXCutOut(l, w, h, edgeRad, notchRad) {
+    difference() {
+        roundedEdgesCube( l, w, h, edgeRad );
+        fingerNotch(l, h, notchRad);
+        xCutout();
+        difference() {
+            roundedEdgesCube( l * 0.85, w * 0.77, h * 1.1, edgeRad );
+            scale([1.3, 1.3]) {
+                fingerNotch(l * 0.75, h * 1.1, notchRad * 1);
+            }
+            translate([-l/3.66, 0, 0]) {
+                cube([l, w, h*2], center=true);
+            }
+        }
+    }
+}
 // stockpile big cards
 // values in mm
 largeLength = 87;
@@ -195,49 +241,7 @@ largeHeight = 12;
 largeNotchRadius = 15;
 largeEdgeRad = 1;
 
-// with nothing cut out
-translate([0, -largeWidth * 1.1, 0]) {
-    difference() {
-        roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
-        fingerNotch(largeLength, largeHeight, largeNotchRadius);
-    }
-}
-
-// with x cut out
-translate([0, largeWidth * 1.1, 0]) {
-    difference() {
-        roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
-        fingerNotch(largeLength, largeHeight, largeNotchRadius);
-        xCutout();
-    }
-}
-
-// with cap cut out
-difference() {
-    roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
-    fingerNotch(largeLength, largeHeight, largeNotchRadius);
-    difference() {
-        roundedEdgesCube( largeLength * 0.75, largeWidth * 0.75, largeHeight * 1.1, largeEdgeRad );
-        scale([1.3, 1.3]) {
-            fingerNotch(largeLength * 0.75, largeHeight * 1.1, largeNotchRadius * 1);
-        }
-    }
-}
-
-// with x cut out and tracing around notch
-translate([largeLength * 1.1, 0, 0]) {
-    difference() {
-        roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
-        fingerNotch(largeLength, largeHeight, largeNotchRadius);
-        xCutout();
-        difference() {
-            roundedEdgesCube( largeLength * 0.85, largeWidth * 0.77, largeHeight * 1.1, largeEdgeRad );
-            scale([1.3, 1.3]) {
-                fingerNotch(largeLength * 0.75, largeHeight * 1.1, largeNotchRadius * 1);
-            }
-            translate([-largeLength/3.66, 0, 0]) {
-                cube([largeLength, largeWidth, largeHeight*2], center=true);
-            }
-        }
-    }
-}
+translate([0, -largeWidth * 1.1, 0])    capWithNothingCutOut    ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
+translate([0,  largeWidth * 1.1, 0])    capWithXCutOut          ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
+                                        capWithCapCutOut        ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );
+translate([largeLength * 1.1, 0, 0])    capWithFancyXCutOut     ( largeLength, largeWidth, largeHeight, largeEdgeRad, largeNotchRadius );

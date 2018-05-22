@@ -147,6 +147,38 @@ difference(){
     }
 }
 
+module triangleCutout(x,y,z) {
+    polyhedron(
+        points = [ [0,0,0], [x,0,0], [x,y,0], [0,y,0], [0,y/2,z], [x,y/2,z] ],
+        faces = [ [0,1,2,3], [5,4,3,2], [0,4,5,1], [0,3,4], [5,2,1] ]
+    );
+}
+
+module xCutout() {
+    translate([-largeWidth/10, 0, largeHeight]) {
+        rotate([0,90,0]) {
+            translate([0,-largeLength/4,-largeWidth/2]) {
+                triangleCutout(largeHeight * 2, largeLength / 2, largeWidth / 2.2, 0,0,0,0,0);
+            }
+        }
+        rotate([90,90,0]) {
+            translate([0,-largeLength/4,-largeWidth/2.5]) {
+                triangleCutout(largeHeight * 2, largeLength / 2, largeWidth / 3, 0,0,0,0,0);
+            }
+        }
+        rotate([0,90,90]) {
+            translate([0,-largeLength/4,-largeWidth/2.5]) {
+                triangleCutout(largeHeight * 2, largeLength / 2, largeWidth / 3, 0,0,0,0,0);
+            }
+        }
+        rotate([-90,90,90]) {
+            translate([0,-largeLength/4,-largeWidth/2]) {
+                triangleCutout(largeHeight * 2, largeLength / 2, largeWidth / 2.2, 0,0,0,0,0);
+            }
+        }
+    }
+}
+
 module fingerNotch(length, height, radius)
 translate( [length/2, 0, 0] ) {
     cylinder(height + 0.2, r = radius, $fn = 100, center = true);
@@ -166,20 +198,30 @@ largeEdgeRad = 1;
 difference() {
     roundedEdgesCube( largeLength, largeWidth, largeHeight, largeEdgeRad );
     fingerNotch(largeLength, largeHeight, largeNotchRadius);
-    text("$");
+    xCutout();
 }
+
+    //triangleCutout(largeLength, largeWidth * 1.25, largeHeight * 1.40, 90, 0, -largeLength/2, -largeWidth/1.58, -1.5*largeHeight);
+    //triangleCutout(largeLength, largeWidth * 1.25, largeHeight * 1.25, -90, 0, -largeLength/2, -largeWidth/1.65, -1.5*largeHeight);
+    //triangleCutout(largeLength, largeWidth / 1.9, largeHeight * 2.9, 180, 0, -largeLength/2, -largeWidth/3.8, -3*largeHeight);
+    //triangleCutout(largeLength, largeWidth, largeHeight, 0, 90, -largeLength/2, -largeWidth/2, -1.5*largeHeight);
+
+//rotate([90,-90,0]) {
+//    translate([-length/2, 0, 0 ])
+//    triangleCutout(largeLength, largeWidth, largeHeight);
+//}
 
 // stockpile small cards
 // values in mm
-length = 66;
-width = 44;
-height = 12;
-notchRadius = 13;
-edgeRad = 1;
+//length = 66;
+//width = 44;
+//height = 12;
+//notchRadius = 13;
+//edgeRad = 1;
 
-translate([0,57,0]) {
-    difference() {
-        roundedEdgesCube( length, width, height, edgeRad );
-        fingerNotch(length, height, notchRadius);
-    }
-}
+//translate([0,57,0]) {
+//    difference() {
+//        roundedEdgesCube( length, width, height, edgeRad );
+//        fingerNotch(length, height, notchRadius);
+//    }
+//}
